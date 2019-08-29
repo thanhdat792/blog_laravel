@@ -8,8 +8,8 @@ use App\Post;
 class PostController extends Controller
 {
     public function index() {
-    	$posts = Post::all();
-    	dump($posts);
+    	$posts = Post::with(['comments','user'])->get();
+    	dump($posts->toArray());
 
     	return; 
     }

@@ -8,7 +8,8 @@ use App\Post;
 class PostController extends Controller
 {
     public function index() {
-    	$posts = Post::with(['comments','user'])->get();
+    	// get all post and comment attach information of comment owner
+    	$posts = Post::with(['comments.user','user'])->get();
     	dump($posts->toArray());
 
     	return; 

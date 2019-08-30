@@ -54,12 +54,8 @@ $(document).ready(function() {
                 data: {
                     currentPage : currentPage
                 },
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader('X-CSRF-Token', $('[name="_csrfToken"]').val());
-                },
                 success: function (data) {
                     $.each(data, function(k,v) {
-                        console.log(v);
                         // init new post
                         var post = $('<div>').attr({class: 'panel panel-default'}).appendTo($('#main'));
 

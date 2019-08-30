@@ -111,4 +111,36 @@ $(document).ready(function() {
                 }
             });
     });
+
+    $('body').on('keypress','input.comment-typing', function (e) {
+        if (e.which === 13) {
+            createComment($(this));
+        }
+    });
 });
+
+function createComment($this) {
+    var postId = $this.attr('id');
+    var parent_id = null;
+    var message = $this.val();
+    var type = $this.attr('class');
+    if (type.includes('sub-comment-typing')) {
+        parent_id = $this.closest('div').attr('id');
+    }
+    $.ajax({
+        method: "POST",
+        url: baseUrl + '/comments/addComment',
+        dataType: 'json',
+        data: {
+            postId : postId,
+            message : message,
+            parent_id : parent_id
+        },
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader('X-CSRF-Token', $('[name="_csrfToken"]').val());
+        },
+        success: function (data) {
+            console.log(data);
+        }
+    });
+}

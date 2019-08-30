@@ -42,4 +42,24 @@ $(document).ready(function() {
                 }
             });
     });
+
+    $(".load-more").click(function(){
+        // Each page has 5 posts
+        if ($("#main").children("div").length < 5) return;
+        var currentPage = (Math.floor($("#main").children("div").length % 5) == 0) ? Math.floor($("#main").children("div").length / 5) : Math.floor($("#main").children("div").length / 5) + 1;
+        $.ajax({
+                method: "POST",
+                url: baseUrl + '/posts/loadMore',
+                dataType: 'json',
+                data: {
+                    currentPage : currentPage
+                },
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('X-CSRF-Token', $('[name="_csrfToken"]').val());
+                },
+                success: function (data) {
+                    console.log(data);
+                }
+            });
+    });
 });

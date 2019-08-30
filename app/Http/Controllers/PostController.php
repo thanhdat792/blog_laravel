@@ -10,12 +10,13 @@ class PostController extends Controller
 {
     public function index() {
     	/*
-			Get all post include : 	Post detail
-								   	Information of owner post
-									Comment of post and information of owner comment
-									Reply comment of post and information of owner reply comment
+			Retrieve the latest 5 posts include : - Post detail
+								   	              - Information of owner post
+									              - Comment of post and information of owner comment
+									              - Reply comment of post and information of owner reply comment
     	*/
-    	$posts = Post::with(['user','comments.user','comments.children.user'])->get();
+        $relationsParram = array('user','comments.user','comments.children.user');
+    	$posts = Post::with($relationsParram)->orderBy('id', 'DESC')->take(5)->get();
 
     	return view('posts.index', ['posts' => $posts->toArray()]); 
     }
@@ -34,6 +35,24 @@ class PostController extends Controller
             if ($post->save()) {
                 return Post::with('user')->find($post->id)->toJson(JSON_PRETTY_PRINT);
             }
+        }
+    }
+
+    /*
+        Load Method Method
+        Input : current page number (send from Jquery Ajax)
+        Output : 5 next post (json type) 
+    */
+    public function loadMore() {
+        if (request()->currentPage) {
+            $currentPage = request()->currentPage;
+            $relationsParram = array('user','comments.user','comments.children.user');
+            $getNextFromPost = $currentPage * 5;
+            $posts = Post::with($relationsParram)->orderBy('id','DESC')->take(5)->skip($getNextFromPost)->get();
+
+            Log::Info($posts);
+
+            return $posts->toJson(JSON_PRETTY_PRINT);
         }
     }
 }

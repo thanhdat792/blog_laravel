@@ -50,8 +50,6 @@ class PostController extends Controller
             $getNextFromPost = $currentPage * 5;
             $posts = Post::with($relationsParram)->orderBy('id','DESC')->take(5)->skip($getNextFromPost)->get();
 
-            Log::Info($posts);
-
             return $posts->toJson(JSON_PRETTY_PRINT);
         }
     }

@@ -3,7 +3,7 @@ $(document).ready(function() {
         var content = $('.post-message').val();
         $.ajax({
                 method: "POST",
-                url: '/timeline/public/posts/create',
+                url: baseUrl + '/posts/create',
                 dataType: 'json',
                 data: {
                     content : content
@@ -19,7 +19,7 @@ $(document).ready(function() {
                     var post_header = $('<div>').attr({class:'panel-heading'}).appendTo($(post));
                     var post_header_title = $('<h3 class="panel-title"><a href="javascript:void(0)"><div class="post-header"></div></a></h3>').appendTo($(post_header));
                     var post_header_avatar = $('<div>').attr({class:'post-header-avatar',}).appendTo($(post_header_title));
-                    $('<a href="javascript:void(0)"><img src="/timeline/public'+ data.user.avatar +'" alt="" class="media-object img-rounded post-user-avatar"></a>').appendTo($(post_header_avatar));
+                    $('<a href="javascript:void(0)"><img src="'+ baseUrl + data.user.avatar +'" alt="" class="media-object img-rounded post-user-avatar"></a>').appendTo($(post_header_avatar));
                     var post_header_body = $('<div>').attr({class:'post-header-body',}).appendTo($(post_header_title));
                     $('<span> <a href="javascript:void(0)">' + data.user.username +'</a> </span><br> <small><span><time>22 minutes</time></span><span>ago</span></small>').appendTo($(post_header_body));
                     /* End part header of post*/ 
@@ -33,7 +33,7 @@ $(document).ready(function() {
                     /* Part footer of post*/
                     var post_footer = $('<div>').attr({class:'panel-footer',}).appendTo($(post));
                     var comment_list = $('<div>').attr({class:'comment-list',id: data.id}).appendTo($(post_footer));
-                    $('<img src="/timeline/public' + data.user.avatar + '" alt="" class="img-rounded comment-user-avatar">').appendTo($(post_footer));
+                    $('<img src="' + baseUrl + data.user.avatar + '" alt="" class="img-rounded comment-user-avatar">').appendTo($(post_footer));
                     $('<input class="comment-typing" id="' + data.id + '" placeholder=" Write a comment..." style="margin-left:3px;">').appendTo($(post_footer));
                     /* End part footer of post*/
 

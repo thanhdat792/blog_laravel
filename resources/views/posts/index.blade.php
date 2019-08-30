@@ -8,6 +8,7 @@
          	</div>
          	<div class="col-xs-12 col-sm-8 col-md-6">
 	            <div class="input-group">
+	            	<input type="hidden" name="_csrfToken" value="{{ csrf_token() }}" />
 	               <input class="post-message form-control" type="text" name="content" placeholder="Make a post...">
 	               <span class="input-group-btn">
 	                 <button class="post btn btn-success" type="submit" name="post">Post</button>
@@ -72,7 +73,7 @@
 		                    </div>
 		                    <!-- post footer -->
 		                    <div class="panel-footer">
-		                        <div class = "comment-list" id = "">
+		                        <div class = "comment-list" id = "{{$post['id']}}">
 		                        	@foreach($post['comments'] as $comment)
 			                            <div class="comment">
 			                                <div class="comment-avatar-user">
@@ -80,8 +81,8 @@
 			                                    	<img src="{{asset($comment['user']['avatar'])}}" class = "media-object img-rounded comment-user-avatar">
 			                                    </a>
 			                                </div>
-			                                <div class = "comment-body" id = "">
-			                                    <div class = "sub-comment"  id = "">
+			                                <div class = "comment-body" id = "{{$comment['id']}}">
+			                                    <div class = "sub-comment"  id = "{{'parent-comment-' . $comment['id']}}">
 			                                       	<p class="" style = "margin: 0;padding: 0;"> 
 			                                          	<span>
 			                                          		<a href="javascript:void(0)">
@@ -98,29 +99,31 @@
 			                                          	<small><span><time>22 min </time></span><span>ago</span></small>
 			                                       	</p>
 			                                       	@if(isset($comment['children']))
-				                                        <div class = "sub-comment-item">
-				                                            <div class = "comment">
-				                                               	<div class = "comment-avatar-user">
-				                                                  	<a href="javascript:void(0)">
-				                                                     
-				                                                  	</a>
-				                                               	</div>
-				                                               <div class="comment-body">
-				                                                  	<p style = "margin: 0;padding: 0;" class="comment"> 
-					                                                    <span>
-					                                                        <a href="javascript:void(0)"></a>
-					                                                    </span>
-				                                                  	</p>
-				                                                  	<div>
-				                                                     	<small>
-				                                                     		<span> <a href="javascript:void(0)">Like </a></span> <span> <a href="javascript:void(0)">Comment </a></span>
-				                                                     	</small>
-				                                                     	<small><span><time>2 min </time></span><span>ago</span>
-				                                                     	</small>
-				                                                  	</div>
-				                                               </div>
-				                                            </div>
-				                                        </div>
+			                                       		@foreach($comment['children'] as $subComment)
+					                                        <div class = "sub-comment-item">
+					                                            <div class = "comment">
+					                                               	<div class = "comment-avatar-user">
+					                                                  	<a href="javascript:void(0)">
+					                                                    	<img src="{{asset($subComment['user']['avatar'])}}" class = "media-object img-rounded sub-comment-user-avatar"> 
+					                                                  	</a>
+					                                               	</div>
+					                                               <div class="comment-body">
+					                                                  	<p style = "margin: 0;padding: 0;" class="comment"> 
+						                                                    <span>
+						                                                        <a href="javascript:void(0)">{{$subComment['user']['username']}}</a>
+						                                                    </span>{{$subComment['message']}}
+					                                                  	</p>
+					                                                  	<div>
+					                                                     	<small>
+					                                                     		<span> <a href="javascript:void(0)">Like </a></span> <span> <a href="javascript:void(0)">Comment </a></span>
+					                                                     	</small>
+					                                                     	<small><span><time>2 min </time></span><span>ago</span>
+					                                                     	</small>
+					                                                  	</div>
+					                                               </div>
+					                                            </div>
+					                                        </div>
+					                                    @endforeach
 				                                    @endif
 			                                    </div>
 			                                    <img src="{{asset($comment['user']['avatar'])}}" class = "img-rounded sub-comment-user-avatar">

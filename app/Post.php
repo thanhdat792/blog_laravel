@@ -11,7 +11,7 @@ class Post extends Model {
 		Relationship type : hasMany (a post may have multiple comments)
 	*/
     public function comments() {
-    	return $this->hasMany('App\Comment','postId');
+    	return $this->hasMany('App\Comment','postId')->where('parent_id','=', null);;
     }
 
     /* 

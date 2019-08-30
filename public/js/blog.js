@@ -121,12 +121,9 @@ $(document).ready(function() {
 
 function createComment($this) {
     var postId = $this.attr('id');
-    var parent_id = null;
     var message = $this.val();
     var type = $this.attr('class');
-    if (type.includes('sub-comment-typing')) {
-        parent_id = $this.closest('div').attr('id');
-    }
+    var parent_id = (type.includes('sub-comment-typing')) ? $this.closest('div').attr('id') : null;
     $.ajax({
         method: "POST",
         url: baseUrl + '/comments/addComment',
@@ -140,7 +137,32 @@ function createComment($this) {
             xhr.setRequestHeader('X-CSRF-Token', $('[name="_csrfToken"]').val());
         },
         success: function (data) {
-            console.log(data);
+            $('input').val('');
+                if (type.includes('sub-comment-typing')) {
+                    // init new post
+                    var sub_comment_item = $('<div>').attr({class: 'sub-comment-item'}).appendTo($('.sub-comment#parent-comment-' + parent_id));
+                    var comment = $('<div>').attr({class: 'comment'}).appendTo($(sub_comment_item));
+                    var comment_avatar_user = $('<div>').attr({class: 'comment-avatar-user'}).appendTo($(comment));
+                    var link_comment_avatar_user = $('<a>').attr({href:'javascript:void(0)'}).appendTo($(comment_avatar_user))
+                    $('<img>').attr({class:'media-object img-rounded sub-comment-user-avatar',src: baseUrl + data.user.avatar}).appendTo($(link_comment_avatar_user));
+                    var comment_body = $('<div>').attr({class: 'comment-body'}).appendTo($(comment));
+                    var comment_body_content = $('<p>').attr({class: 'comment',style:'margin: 0;padding: 0;'}).appendTo($(comment_body));
+                    $(comment_body_content).append('<span>'+'<a href="javascript:void(0">'+data.user.username+'</a>'+'</span> '+data.message);
+                    $(comment_body).append('<div><small><span><a href="javascript:void(0)">Like </a></span> <span> <a href="javascript:void(0)">Comment </a></span></small><small><span><time>2 min </time></span><span>ago</span></small></div>');
+                    return;
+                }
+                // when type of input is comment
+                var comment = $('<div>').attr({class: 'sub-comment-item'}).appendTo($('.comment-list#' + postId));
+                var comment_avatar_user = $('<div>').attr({class: 'comment-avatar-user'}).appendTo($(comment));
+                var link_comment_avatar_user = $('<a>').attr({href:'javascript:void(0)'}).appendTo($(comment_avatar_user))
+                $('<img>').attr({class:'media-object img-rounded comment-user-avatar',src: baseUrl + data.user.avatar}).appendTo($(link_comment_avatar_user));
+                var comment_body = $('<div>').attr({class:'comment-body',id:data.id}).appendTo($(comment));
+                var sub_comment = $('<div>').attr({class:'sub-comment',id:'parent-comment-' + data.id}).appendTo($(comment_body));
+                var comment_body_content = $('<p>').attr({class: 'comment',style:'margin: 0;padding: 0;'}).appendTo($(sub_comment));
+                $(comment_body_content).append('<span>'+'<a href="javascript:void(0">'+data.user.username+'</a>'+'</span> '+data.message);
+                $(sub_comment).append('<p class="comment" style = "margin: 0;padding: 0;"><small><span><a href="javascript:void(0)">Like </a></span> <span> <a href="javascript:void(0)">Comment </a></span></small><small><span><time>2 min </time></span><span>ago</span></small></p>');
+                $('<img>').attr({class:'img-rounded sub-comment-user-avatar',src: baseUrl + data.user.avatar}).appendTo($(comment_body));
+                $('<input>').attr({class:'comment-typing sub-comment-typing',id:postId,placeholder:'Write a comment...',style:'margin-left:3px;'}).appendTo($(comment_body));
         }
     });
 }

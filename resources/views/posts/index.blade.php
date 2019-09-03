@@ -126,13 +126,13 @@
 					                                    @endforeach
 				                                    @endif
 			                                    </div>
-			                                    <img src="{{asset($comment['user']['avatar'])}}" class = "img-rounded sub-comment-user-avatar">
+			                                    <img src="{{asset($avatrOfCurrentUser)}}" class = "img-rounded sub-comment-user-avatar">
 			                                    <input class = "comment-typing sub-comment-typing" id = "" placeholder=" Write a comment...">
 			                                </div>
 			                            </div>
 			                        @endforeach 
 		                        </div>
-		                        <img src="{{asset($post['user']['avatar'])}}" class = "img-rounded comment-user-avatar">
+		                        <img src="{{asset($avatrOfCurrentUser)}}" class = "img-rounded comment-user-avatar">
 		                        <input class = "comment-typing" id = "{{$post['id']}}" placeholder=" Write a comment...">
 		                    </div>
 		                </div>

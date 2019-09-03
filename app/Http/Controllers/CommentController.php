@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Comment;
 
 class CommentController extends Controller {
@@ -13,10 +14,10 @@ class CommentController extends Controller {
         Output : new comment detail (json type)
 	*/
     public function addComment() {
-    	$curentUserId = 2;
+    	$currentUserId = Auth::user()->id;
 		if (request()->message) {
 			$comment = new Comment(request()->all());
-			$comment->userId = $curentUserId;
+			$comment->userId = $currentUserId;
 			if ($comment->save()) {
 				return Comment::with('user')->find($comment->id)->toJson(JSON_PRETTY_PRINT);
 			}

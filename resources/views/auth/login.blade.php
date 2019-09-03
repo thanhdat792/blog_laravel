@@ -16,7 +16,13 @@
                 <div style="margin-bottom: 25px" class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
                     <input id="login-password" type="password" class="form-control" name="password" placeholder = "Mật khẩu" autocomplete = 'new-password'>
-                </div>                                   
+                </div>  
+                <div class="input-group">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                        Duy trì đăng nhập
+                    </div>
+                </div>                                 
                 <div style="margin-top:10px" class="form-group">
                     <div class="col-sm-12 controls">
                         <input type="submit" class="btn btn-primary" id="btn-login" value = "Đăng nhập"> 
@@ -25,7 +31,7 @@
                 <div class="form-group">
                     <div class="col-md-12 control">
                         <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%" >
-                            Bạn chưa có tài khoản 
+                            Bạn chưa có tài khoản?
                             <a href="#" onClick="$('#loginbox').hide(); $('#signupbox').show()">
                                 Đăng kí tại đây
                             </a>

@@ -33,7 +33,7 @@ $(document).ready(function() {
                     /* Part footer of post*/
                     var post_footer = $('<div>').attr({class:'panel-footer',}).appendTo($(post));
                     var comment_list = $('<div>').attr({class:'comment-list',id: data.id}).appendTo($(post_footer));
-                    $('<img src="' + baseUrl + data.user.avatar + '" alt="" class="img-rounded comment-user-avatar">').appendTo($(post_footer));
+                    $('<img src="' + baseUrl + avatrOfCurrentUser + '" alt="" class="img-rounded comment-user-avatar">').appendTo($(post_footer));
                     $('<input class="comment-typing" id="' + data.id + '" placeholder=" Write a comment..." style="margin-left:3px;">').appendTo($(post_footer));
                     /* End part footer of post*/
 
@@ -97,10 +97,10 @@ $(document).ready(function() {
                                 $(comment_body_content).append('<span>'+'<a href="javascript:void(0">'+subComment.user.username+'</a>'+'</span> '+subComment.message);
                                 $(comment_body).append('<div><small><span><a href="javascript:void(0)">Like </a></span> <span> <a href="javascript:void(0)">Comment </a></span></small><small><span><time>2 min </time></span><span>ago</span></small></div>');
                             });
-                            $('<img>').attr({class:'img-rounded sub-comment-user-avatar',src: baseUrl + comment.user.avatar}).appendTo($(comment_body));
+                            $('<img>').attr({class:'img-rounded sub-comment-user-avatar',src: baseUrl + avatrOfCurrentUser}).appendTo($(comment_body));
                             $('<input>').attr({class:'comment-typing sub-comment-typing',id:v.id,placeholder:'Write a comment...',style:'margin-left:3px;'}).appendTo($(comment_body));
                         });
-                        $('<img src="' + baseUrl + v.user.avatar + '" alt="" class="img-rounded comment-user-avatar">').appendTo($(post_footer));
+                        $('<img src="' + baseUrl + avatrOfCurrentUser + '" alt="" class="img-rounded comment-user-avatar">').appendTo($(post_footer));
                         $('<input class="comment-typing" id="' + v.id + '" placeholder="Write a comment..." style="margin-left:3px;">').appendTo($(post_footer));
                         /* End part footer of post*/
                     });
@@ -157,7 +157,7 @@ function createComment($this) {
                 var comment_body_content = $('<p>').attr({class: 'comment',style:'margin: 0;padding: 0;'}).appendTo($(sub_comment));
                 $(comment_body_content).append('<span>'+'<a href="javascript:void(0">'+data.user.username+'</a>'+'</span> '+data.message);
                 $(sub_comment).append('<p class="comment" style = "margin: 0;padding: 0;"><small><span><a href="javascript:void(0)">Like </a></span> <span> <a href="javascript:void(0)">Comment </a></span></small><small><span><time>2 min </time></span><span>ago</span></small></p>');
-                $('<img>').attr({class:'img-rounded sub-comment-user-avatar',src: baseUrl + data.user.avatar}).appendTo($(comment_body));
+                $('<img>').attr({class:'img-rounded sub-comment-user-avatar',src: baseUrl + avatrOfCurrentUser}).appendTo($(comment_body));
                 $('<input>').attr({class:'comment-typing sub-comment-typing',id:postId,placeholder:'Write a comment...',style:'margin-left:3px;'}).appendTo($(comment_body));
         }
     });

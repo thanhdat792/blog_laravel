@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Post;
-use Log;
 
 class PostController extends Controller {
     
@@ -19,10 +19,11 @@ class PostController extends Controller {
 									              - Comment of post and information of owner comment
 									              - Reply comment of post and information of owner reply comment
     	*/
+        $avatrOfCurrentUser = Auth::user()->avatar;
         $relationsParram = array('user','comments.user','comments.children.user');
     	$posts = Post::with($relationsParram)->orderBy('id', 'DESC')->take(5)->get();
 
-    	return view('posts.index', ['posts' => $posts->toArray()]); 
+    	return view('posts.index', ['posts' => $posts->toArray(), 'avatrOfCurrentUser' => $avatrOfCurrentUser]); 
     }
 
     /*
@@ -32,7 +33,7 @@ class PostController extends Controller {
     */
     public function create() {
         if (request()->content) {
-            $currentUserId = 1;
+            $currentUserId = Auth::user()->id;
             $post = new Post(request()->all());
             $post->user_id = $currentUserId;
             // save post to db

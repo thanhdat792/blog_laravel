@@ -6,8 +6,12 @@ use Illuminate\Http\Request;
 use App\Post;
 use Log;
 
-class PostController extends Controller
-{
+class PostController extends Controller {
+    
+    public function __construct() {
+        $this->middleware('auth');
+    }
+
     public function index() {
     	/*
 			Retrieve the latest 5 posts include : - Post detail

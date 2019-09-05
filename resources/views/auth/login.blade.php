@@ -16,7 +16,12 @@
                 <div style="margin-bottom: 25px" class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
                     <input id="login-password" type="password" class="form-control" name="password" placeholder = "Mật khẩu" autocomplete = 'new-password'>
-                </div>  
+                </div> 
+                @error('password')
+                    <div style="margin-bottom: 25px" class="input-group alert alert-danger">
+                        {{ $message }}
+                    </div>
+                @enderror 
                 <div class="input-group">
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
@@ -91,4 +96,31 @@
             </form> 
         </div>
     </div>      
+</div>
+
+<script type="text/javascript">
+@error('username')
+    $('#myModal').modal('show');
+@enderror
+</script>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modal Header</h4>
+      </div>
+      <div class="modal-body">
+        <p>Some text in the modal.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
 </div>

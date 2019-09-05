@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use Lang;
+use App\User;
 
 class LoginController extends Controller
 {
@@ -44,5 +47,24 @@ class LoginController extends Controller
     public function logout() {
         Auth::logout();
         return redirect('/login');
+    }
+
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        if (!User::where('username', $request->username)->first() ) {
+            return redirect()->back()
+                ->withInput($request->only($this->username(), 'remember'))
+                ->withErrors([
+                    $this->username() => 'Username not exist',
+                ]);
+        }
+
+        if (!User::where('username', $request->username)->where('password', bcrypt($request->password))->first() ) {
+            return redirect()->back()
+                ->withInput($request->only($this->username(), 'remember'))
+                ->withErrors([
+                    'password' => 'Incorrect password',
+                ]);
+        }
     }
 }

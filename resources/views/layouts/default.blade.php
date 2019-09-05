@@ -30,7 +30,7 @@
   <script>
     // "global" vars, built using blade
     var baseUrl = "{{ URL::to('/') }}";
-    var avatrOfCurrentUser = "{{Auth::user()->avatar}}";
+    var avatrOfCurrentUser = "{{(isset(Auth::user()->avatar)) ? Auth::user()->avatar : ''}}";
   </script>
 </body>
 </html>

@@ -22,4 +22,11 @@ Route::post('/posts/loadMore', 'PostController@loadMore');
 Route::post('/comments/addComment', 'CommentController@addComment');
 // auth route config
 Auth::routes();
+/*
+	- Route::fallback được gọi khi không route tìm thấy trang nào phù hợp (đường dẫn không tồn tại)
+	- fallback là route chạy cuối cùng
 
+	Route::fallback(function(){
+		return 'Không tìm thấy trang';
+	});
+*/
